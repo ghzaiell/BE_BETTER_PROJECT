@@ -1,0 +1,47 @@
+<div class="programmes-container">
+
+  <h2 class="title">Your Programmes</h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">Loading…</div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- No subjects -->
+  <div *ngIf="!loading && subjects.length === 0" class="empty">
+    <p>No programmes found.</p>
+  </div>
+
+  <!-- Subjects -->
+  <div *ngFor="let s of subjects" class="subject-card">
+
+    <!-- Horizontal Card Header -->
+    <div class="subject-header" (click)="toggleMissions(s)">
+      <div class="subject-info">
+        <h3>{{ s.name }}</h3>
+        <p>{{ s.description }}</p>
+      </div>
+
+      <!-- Arrow -->
+      <div class="arrow" [class.open]="s.showMissions">
+        ➤
+      </div>
+    </div>
+
+    <!-- Missions Section -->
+    <div class="missions" *ngIf="s.showMissions">
+      <div *ngFor="let m of s.missions" class="mission-item">
+        <input type="checkbox" [checked]="m.etat"  />
+        <div>
+          <strong>{{ m.name }}</strong>
+          <p>{{ m.description }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+

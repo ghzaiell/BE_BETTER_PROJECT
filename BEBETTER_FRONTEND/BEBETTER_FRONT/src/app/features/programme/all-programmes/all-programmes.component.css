@@ -1,0 +1,76 @@
+.programmes-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.subject-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.2s ease;
+}
+
+.subject-card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Horizontal card header */
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.subject-info h3 {
+  margin: 0;
+  font-size: 18px;
+  
+}
+
+.subject-info p {
+  margin: 5px 0 0 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Arrow */
+.arrow {
+  font-size: 20px;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+/* Missions list */
+.missions {
+  padding: 15px 20px;
+  background: #fafafa;
+  border-top: 1px solid #eee;
+}
+
+.mission-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.mission-item p {
+  margin: 2px 0 0 0;
+  font-size: 13px;
+  color: #555;
+}
+
+
+ 
