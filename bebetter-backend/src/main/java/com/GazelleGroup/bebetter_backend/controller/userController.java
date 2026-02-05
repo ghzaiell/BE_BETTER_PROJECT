@@ -14,15 +14,24 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class userController {
 
     UserService userService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/byId/{userId}")
     public ResponseEntity<?> getUser(@PathVariable String userId) {
         Utilisateur utilisateur = userService.getUserById(userId);
         if(utilisateur == null){
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
+        }
+        return ResponseEntity.ok(utilisateur);
+    }
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+        Utilisateur utilisateur = userService.getUserByUsername(username);
+        if(utilisateur == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
         }
         return ResponseEntity.ok(utilisateur);
     }

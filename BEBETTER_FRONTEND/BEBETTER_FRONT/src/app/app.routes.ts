@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { authGuard } from './core/auth/auth.guard';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 
     export const routes: Routes = [
@@ -16,6 +17,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
+      { path: 'about-us', component: AboutUsComponent },
 
       // Lazy load ProgrammeModule
       { 

@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+.about {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.about h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.about .intro {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.contact {
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.contact span {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.contact a {
+  text-decoration: none;
+  color: #ffffff;
+  border-bottom: 1px solid #433a3a;
+  padding-bottom: 2px;
+}
+
+.contact a:hover {
+  opacity: 0.7;
+}
