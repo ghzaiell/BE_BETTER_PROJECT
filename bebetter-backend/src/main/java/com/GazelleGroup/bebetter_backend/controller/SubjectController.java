@@ -42,7 +42,7 @@ public class SubjectController {
             @PathVariable String subjectId) {
         try {
             subjectService.deleteSubject(username,subjectId);
-            return ResponseEntity.ok("subject deleted");
+            return ResponseEntity.ok("subject deleted ");
         }  catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("User or subject not found");

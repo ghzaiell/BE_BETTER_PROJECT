@@ -33,8 +33,12 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml"
                         ).permitAll()
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
-                        .requestMatchers("/subject/**").permitAll()
-                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/subject/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/user/{userId}").hasAnyRole("USER", "ADMIN") // Un user peut voir son propre profil
+                        .requestMatchers(HttpMethod.GET, "/user/all").hasRole("ADMIN")      // Seul admin peut voir tous les users
+                        .requestMatchers(HttpMethod.DELETE, "/user/delete/**").hasRole("ADMIN")  // Seul admin peut supprimer
+                        .requestMatchers(HttpMethod.PUT, "/user/update/**").hasRole("ADMIN")     // Seul admin peut modifier
+
                         // allow register endpoint
                         .anyRequest().authenticated()// all other requests need auth
 

@@ -1,42 +1,49 @@
-
-
 <!-- Top input and button -->
 <div class="container">
   <h2>Let's learn a new soft skill today</h2>
   <div class="form-box">
     <div class="input-box">
-      <input type="text" placeholder="What's on your mind" />
+      <input 
+        type="text" 
+        placeholder="What's on your mind" 
+        [(ngModel)]="userPrompt"
+        (keyup.enter)="generateProgramme()"
+        [disabled]="isLoading"
+      />
     </div>
-    <button>Generate a programme</button>
+    <button 
+      (click)="generateProgramme()"
+      [disabled]="isLoading || !userPrompt.trim()"
+    >
+      {{ isLoading ? 'Creating...' : 'Generate a programme' }}
+    </button>
   </div>
 </div>
 
 <!-- Cards section below -->
 <div class="realisations-section">
-  <h2>Top Picks for Growth</h2>
+  <div class="section-header">
+    <h2>Top Picks for Growth</h2>
+    <button class="view-all-btn" (click)="viewAllProgrammes()">
+      View All Programmes →
+    </button>
+  </div>
+  
   <div class="realisations-container">
-    <div class="card">
-      <h3>Communication & Public Speaking</h3>
-      <p>Développez votre capacité à communiquer clairement et avec impact.
-Améliorez votre articulation, votre aisance, et apprenez à présenter vos idées avec confiance.</p>
-      <button>Start Now</button>
-    </div>
-    <div class="card">
-      <h3>Emotional Intelligence </h3>
-      <p>Apprenez à comprendre, gérer et utiliser vos émotions pour mieux collaborer.
-Développez votre empathie, votre gestion du stress et votre capacité à travailler avec n’importe quel profil.</p>
-      <button>Start Now</button>
-    </div>
-    <div class="card">
-      <h3>Time Management & Productivity</h3>
-      <p>Maîtrisez votre temps, organisez vos journées, et éliminez la procrastination.
-Apprenez les méthodes efficaces : Pomodoro, Deep Work, Eisenhower Matrix…</p>
-      <button>Start Now</button>
+    <div class="card" *ngFor="let pick of topPicks">
+      <h3>{{ pick.title }}</h3>
+      <p>{{ pick.description }}</p>
+      <button 
+        (click)="startProgramme(pick.title, pick.description)"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Creating...' : 'Start Now' }}
+      </button>
     </div>
   </div>
 </div>
 
-
+<!-- Hero section -->
 <div class="hero">
   <img src="qatani.jpg" alt="Soft Skills Hero" />
   <div class="hero-content">
@@ -45,5 +52,3 @@ Apprenez les méthodes efficaces : Pomodoro, Deep Work, Eisenhower Matrix…</p>
     <button class="hero-btn">See More</button>
   </div>
 </div>
-
-
