@@ -8,6 +8,7 @@ import com.GazelleGroup.bebetter_backend.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,13 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class SubjectService implements ISubjectService {
+
+    @Value("${gemini.api.url}")
+    private String geminiApiUrl;
+
+    @Value("${gemini.api.key}")
+    private String geminiApiKey;
+
 
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
@@ -56,7 +64,7 @@ public class SubjectService implements ISubjectService {
 
 
     public Utilisateur createSubject(String prompt, String username) throws JsonProcessingException {
-        String geminiApiUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=AIzaSyAmSLk9Cn3CS9S-O9sIVZZExYGXphinliQ";
+        String geminiUrl = geminiApiUrl + "?key=" + geminiApiKey;;
 
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper mapper = new ObjectMapper();
@@ -100,7 +108,7 @@ Now the user problem is:
 
         String response;
         try {
-            response = restTemplate.postForObject(geminiApiUrl, requestBody, String.class);
+            response = restTemplate.postForObject(geminiUrl, requestBody, String.class);
             System.out.println("===== RAW GEMINI RESPONSE =====");
             System.out.println(response);
             System.out.println("===== END RAW RESPONSE =====");

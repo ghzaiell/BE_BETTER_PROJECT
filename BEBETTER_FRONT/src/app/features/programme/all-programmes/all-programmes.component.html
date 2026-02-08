@@ -32,7 +32,7 @@
     <!-- Missions Section -->
     <div class="missions" *ngIf="s.showMissions">
       <div *ngFor="let m of s.missions" class="mission-item">
-        <input type="checkbox" [checked]="m.etat"  />
+        <input type="checkbox" [checked]="m.etat"  (change)="onMissionToggle(s, m)"  />
         <div>
           <strong>{{ m.name }}</strong>
           <p>{{ m.description }}</p>
