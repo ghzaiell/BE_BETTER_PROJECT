@@ -38,29 +38,25 @@
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
 
-                // Extract username
-                String username = jwtUtil.extractUsername(token);
+                // Validate first: an expired token or one signed with an old secret is simply ignored (-> 401/403)
+                String username = jwtUtil.validateToken(token) ? jwtUtil.extractUsername(token) : null;
 
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
                     // Load full user details
                     var userDetails = userService.loadUserByUsername(username);
 
-                    // Validate token
-                    if (jwtUtil.validateToken(token)) {
+                    // Create authentication token with proper authorities
+                    var authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
 
-                        // Create authentication token with proper authorities
-                        var authToken = new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                        // Set authentication in Spring Security context
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
-                    }
+                    // Set authentication in Spring Security context
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
 

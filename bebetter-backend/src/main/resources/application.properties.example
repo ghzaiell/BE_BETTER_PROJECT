@@ -10,3 +10,7 @@ openrouter.model=mistralai/mistral-small-3.2-24b-instruct
 app.prompt.subject-coach=classpath:prompts/subject-coach-prompt.txt
 # CORS config (comma-separated list of allowed front-end origins)
 app.cors.allowed-origins=http://localhost:4200
+# JWT signing secret (HS512: at least 64 characters). Keep it private; changing it logs everyone out.
+app.jwt.secret=CHANGE_ME_generate_a_random_string_of_at_least_64_characters_here
+# Token lifetime in milliseconds (36000000 = 10 hours)
+app.jwt.expiration-ms=36000000
