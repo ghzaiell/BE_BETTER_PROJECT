@@ -3,6 +3,7 @@ package com.GazelleGroup.bebetter_backend.controller;
 import com.GazelleGroup.bebetter_backend.entity.Mission;
 import com.GazelleGroup.bebetter_backend.entity.Subject;
 import com.GazelleGroup.bebetter_backend.entity.Utilisateur;
+import com.GazelleGroup.bebetter_backend.service.OffTopicPromptException;
 import com.GazelleGroup.bebetter_backend.service.SubjectService;
 import com.GazelleGroup.bebetter_backend.service.UserService;
 import lombok.AllArgsConstructor;
@@ -12,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/subject")
 public class SubjectController {
 
@@ -24,15 +25,20 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping("/newSubjects/{username}")
-    public ResponseEntity<Utilisateur> addSubject(
+    public ResponseEntity<?> addSubject(
             @PathVariable String username,
             @RequestBody String prompt) {
         try {
             Utilisateur user = subjectService.createSubject(prompt, username);
             return ResponseEntity.ok(user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        } catch (OffTopicPromptException e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body(Map.of("message", e.getMessage(), "offTopic", true));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+                    .body(Map.of("message", "Failed to create programme. Please try again."));
         }
     }
 

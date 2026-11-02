@@ -18,7 +18,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     @Autowired
@@ -31,8 +30,29 @@ public class AuthController {
     private AuthenticationManager authManager;
 
     @PostMapping("/register")
-    public Utilisateur register(@RequestBody Utilisateur utilisateur) {
-        return userService.registerUser(utilisateur);
+    public ResponseEntity<?> register(@RequestBody Utilisateur utilisateur) {
+        if (isBlank(utilisateur.getUsername()) || isBlank(utilisateur.getEmail())
+                || isBlank(utilisateur.getPassword())) {
+            return new ResponseEntity<>(Map.of("message", "Username, email and password are required"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if (utilisateur.getPassword().length() < 6) {
+            return new ResponseEntity<>(Map.of("message", "Password must be at least 6 characters"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        try {
+            Utilisateur saved = userService.registerUser(utilisateur);
+            // Sign the new user in right away
+            Map<String, String> map = new HashMap<>();
+            map.put("token", jwtUtil.generateToken(saved.getUsername()));
+            return new ResponseEntity<>(map, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(Map.of("message", e.getMessage()), HttpStatus.CONFLICT);
+        }
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
     }
 
     @PostMapping("/login")

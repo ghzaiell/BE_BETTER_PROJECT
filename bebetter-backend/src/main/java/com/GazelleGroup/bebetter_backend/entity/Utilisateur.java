@@ -19,7 +19,9 @@ public class Utilisateur implements UserDetails {
     @NotBlank
     @Indexed(unique = true)
     private String username;
-    private String role = "USER_ROLE" ;
+    // Spring Security's hasRole("USER") expects the "ROLE_" prefix
+    public static final String ROLE_USER = "ROLE_USER";
+    private String role = ROLE_USER;
     private String email;
     private String password;
     private List<Subject> subjects;

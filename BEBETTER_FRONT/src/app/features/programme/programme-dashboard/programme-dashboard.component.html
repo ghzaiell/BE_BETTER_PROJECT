@@ -1,1 +1,40 @@
-<p>programme-dashboard works!</p>
+<div class="dashboard-container">
+
+  <h2 class="title">My Progress</h2>
+
+  <div *ngIf="loading" class="loading">Loading…</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <ng-container *ngIf="!loading && !error">
+
+    <!-- Summary tiles -->
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value">{{ overall.percent }}%</span>
+        <span class="stat-label">Overall completion</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ overall.done }} / {{ overall.total }}</span>
+        <span class="stat-label">Missions completed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ completedProgrammes }} / {{ rows.length }}</span>
+        <span class="stat-label">Programmes finished</span>
+      </div>
+    </div>
+
+    <div *ngIf="rows.length === 0" class="empty">No programmes yet.</div>
+
+    <!-- Per-programme progress -->
+    <a *ngFor="let r of rows" class="row" [routerLink]="['../programme', r.subject.id]">
+      <div class="row-head">
+        <strong>{{ r.subject.name }}</strong>
+        <span>{{ r.progress.done }} / {{ r.progress.total }} · {{ r.progress.percent }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="r.progress.percent"></div>
+      </div>
+    </a>
+
+  </ng-container>
+</div>

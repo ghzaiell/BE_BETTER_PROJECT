@@ -25,19 +25,23 @@ export class AuthService {
   // LOGIN
   login(credentials: { username: string; password: string }): Observable<any> {
     return this.http.post<{ token: string }>(`${this.urlAuth}/login`, credentials).pipe(
-      tap((res) => {
-        localStorage.setItem('token', res.token);
-      }),
-      switchMap((res) => {
-        // Extract username from token
-        const username = this.getUsernameFromToken(res.token);
-        if (username) {
-          // Fetch full user data from backend
-          return this.fetchUserData(username);
-        }
-        return of(null);
-      })
+      switchMap((res) => this.startSession(res.token))
     );
+  }
+
+  // REGISTER (backend returns a token, so the new user is signed in right away)
+  register(data: { username: string; email: string; password: string }): Observable<any> {
+    return this.http.post<{ token: string }>(`${this.urlAuth}/register`, data).pipe(
+      switchMap((res) => this.startSession(res.token))
+    );
+  }
+
+  // STORE TOKEN + LOAD USER
+  private startSession(token: string): Observable<User | null> {
+    localStorage.setItem('token', token);
+    // Extract username from token, then fetch full user data from backend
+    const username = this.getUsernameFromToken(token);
+    return username ? this.fetchUserData(username) : of(null);
   }
 
   // LOGOUT
@@ -114,6 +118,11 @@ export class AuthService {
   getCurrentUsername(): string {
     const user = this.currentUserSubject.value;
     return user?.username || '';
+  }
+
+  // GET USERNAME FROM STORED TOKEN (synchronous, available before user data is fetched)
+  getUsername(): string {
+    return this.getUsernameFromToken() || '';
   }
 
   // GET CURRENT USER ID (synchronous)

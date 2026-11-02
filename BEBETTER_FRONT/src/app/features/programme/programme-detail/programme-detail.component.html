@@ -1,0 +1,51 @@
+<div class="detail-container">
+
+  <a routerLink="/programmes/layout/allprogrammes" class="back-link">← Back to programmes</a>
+
+  <div *ngIf="loading" class="loading">Loading…</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <ng-container *ngIf="subject">
+
+    <div class="detail-header">
+      <h2>{{ subject.name }}</h2>
+      <p>{{ subject.description }}</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-card">
+      <div class="progress-text">
+        <span>{{ progress.done }} / {{ progress.total }} missions completed</span>
+        <strong>{{ progress.percent }}%</strong>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress.percent"></div>
+      </div>
+      <p *ngIf="progress.total > 0 && progress.done === progress.total" class="finished">
+        🎉 Programme completed!
+      </p>
+    </div>
+
+    <!-- Missions -->
+    <div class="mission-list">
+      <div *ngFor="let m of subject.missions; let i = index"
+           class="mission-card" [class.done]="m.etat">
+        <div class="mission-index">{{ i + 1 }}</div>
+        <div class="mission-body">
+          <strong>{{ m.name }}</strong>
+          <p>{{ m.description }}</p>
+        </div>
+        <div class="mission-action">
+          <span *ngIf="m.etat" class="badge-done">✔ Done</span>
+          <button *ngIf="!m.etat"
+                  class="btn-confirm"
+                  [disabled]="confirmingId === m.id"
+                  (click)="confirmMission(m)">
+            {{ confirmingId === m.id ? 'Saving…' : 'Confirm done' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

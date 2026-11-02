@@ -1,0 +1,148 @@
+.detail-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #cfdbd1;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.detail-header,
+.progress-card,
+.mission-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.detail-header {
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.detail-header h2 {
+  margin: 0 0 8px 0;
+}
+
+.detail-header p {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Progress */
+.progress-card {
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.progress-bar {
+  height: 12px;
+  background: #eee;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #28a745;
+  transition: width 0.4s ease;
+}
+
+.finished {
+  margin: 10px 0 0 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Missions */
+.mission-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.mission-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mission-card.done {
+  background: #f1f9f3;
+  border-color: #b7e1c1;
+}
+
+.mission-index {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.mission-card.done .mission-index {
+  background: #28a745;
+  color: #fff;
+}
+
+.mission-body {
+  flex: 1;
+}
+
+.mission-body p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.mission-action {
+  flex-shrink: 0;
+}
+
+.btn-confirm {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background: #0062cc;
+}
+
+.btn-confirm:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.badge-done {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.error {
+  color: #dc3545;
+  margin-bottom: 10px;
+}

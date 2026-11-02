@@ -5,5 +5,5 @@ export interface Subject {
   name: string;
   description: string;
   missions: Mission[]; 
-  showMissions: boolean;  // flag to show/hide missions
+  showMissions?: boolean;  // UI-only flag to show/hide missions
 }

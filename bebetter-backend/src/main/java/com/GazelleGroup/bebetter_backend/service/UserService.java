@@ -34,8 +34,12 @@ public class UserService implements IUserService , UserDetailsService {
 
     public Utilisateur registerUser(Utilisateur utilisateur) {
         if (userRepository.findByUsername(utilisateur.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already taken");
+            throw new IllegalStateException("Username already taken");
         } else {
+            // Never trust client-sent id/role/subjects: every new account is a plain user
+            utilisateur.setId(null);
+            utilisateur.setRole(Utilisateur.ROLE_USER);
+            utilisateur.setSubjects(null);
             utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
             userRepository.save(utilisateur);
             return utilisateur;

@@ -74,3 +74,51 @@
 
 
  
+
+.mission-item.done strong {
+  text-decoration: line-through;
+  color: #28a745;
+}
+
+/* Progress */
+.progress-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.progress-bar {
+  height: 8px;
+  margin-top: 5px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #28a745;
+  transition: width 0.4s ease;
+}
+
+.subject-info {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.open-link {
+  display: inline-block;
+  margin-top: 5px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.open-link:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #dc3545;
+  margin-bottom: 10px;
+}

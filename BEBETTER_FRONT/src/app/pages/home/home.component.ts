@@ -15,7 +15,9 @@ import { AuthService } from '../../core/auth/auth.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   
+  readonly maxPromptLength = 4000; // must match SubjectService.MAX_PROMPT_LENGTH in the backend
   userPrompt: string = '';
+  errorMessage: string = '';
   isLoading: boolean = false;
   username: string = '';
   private userSubscription?: Subscription;
@@ -62,8 +64,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   generateProgramme(): void {
+    this.errorMessage = '';
     if (!this.userPrompt.trim()) {
       alert('Please enter what\'s on your mind');
+      return;
+    }
+
+    if (this.userPrompt.length > this.maxPromptLength) {
+      this.errorMessage = `Your text must be at most ${this.maxPromptLength} characters.`;
       return;
     }
 
@@ -85,7 +93,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error('Error creating programme:', error);
           this.isLoading = false;
-          alert('Failed to create programme. Please try again.');
+          // Backend sends { message } for too-long (400) and off-topic (422) prompts
+          this.errorMessage = error.error?.message || 'Failed to create programme. Please try again.';
         }
       });
   }

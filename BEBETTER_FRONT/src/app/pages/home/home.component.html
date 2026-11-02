@@ -7,13 +7,18 @@
         type="text" 
         placeholder="What's on your mind" 
         [(ngModel)]="userPrompt"
+        [attr.maxlength]="maxPromptLength"
         (keyup.enter)="generateProgramme()"
         [disabled]="isLoading"
       />
     </div>
-    <button 
+    <div class="char-counter" [class.limit]="userPrompt.length >= maxPromptLength">
+      {{ userPrompt.length }} / {{ maxPromptLength }}
+    </div>
+    <p class="prompt-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button
       (click)="generateProgramme()"
-      [disabled]="isLoading || !userPrompt.trim()"
+      [disabled]="isLoading || !userPrompt.trim() || userPrompt.length > maxPromptLength"
     >
       {{ isLoading ? 'Creating...' : 'Generate a programme' }}
     </button>

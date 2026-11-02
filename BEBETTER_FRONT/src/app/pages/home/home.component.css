@@ -187,3 +187,23 @@
     .home{
         padding: 20px;
     }
+/* Prompt length counter + error */
+.char-counter {
+  margin-top: -8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.char-counter.limit {
+  color: #ffb3b3;
+}
+
+.prompt-error {
+  margin: 0;
+  max-width: 600px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(220, 53, 69, 0.85);
+  color: #fff;
+  font-size: 14px;
+}

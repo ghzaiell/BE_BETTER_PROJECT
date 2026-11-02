@@ -21,6 +21,14 @@
       <div class="subject-info">
         <h3>{{ s.name }}</h3>
         <p>{{ s.description }}</p>
+
+        <!-- Progress -->
+        <ng-container *ngIf="progressOf(s) as p">
+          <div class="progress-text">{{ p.done }} / {{ p.total }} missions · {{ p.percent }}%</div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="p.percent"></div>
+          </div>
+        </ng-container>
       </div>
 
       <!-- Arrow -->
@@ -31,17 +39,17 @@
 
     <!-- Missions Section -->
     <div class="missions" *ngIf="s.showMissions">
-      <div *ngFor="let m of s.missions" class="mission-item">
-        <input type="checkbox" [checked]="m.etat"  (change)="onMissionToggle(s, m)"  />
+      <div *ngFor="let m of s.missions" class="mission-item" [class.done]="m.etat">
+        <input type="checkbox" [checked]="m.etat" [disabled]="m.etat"
+               (click)="$event.preventDefault(); confirmMission(s, m)" />
         <div>
           <strong>{{ m.name }}</strong>
           <p>{{ m.description }}</p>
         </div>
       </div>
+      <a class="open-link" [routerLink]="['../programme', s.id]">Open programme →</a>
     </div>
 
   </div>
 
 </div>
-
-
